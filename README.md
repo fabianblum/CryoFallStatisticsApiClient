@@ -95,7 +95,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://virtserver.swaggerhub.com/Hanisch-IT/CryoFall_Statistics/1.0.0*
+All URIs are relative to *http://localhost:8071/CryoFallApi/Public/index.php*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -104,6 +104,8 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [Kill](docs/Model/Kill.md)
+ - [LeaderboardResponse](docs/Model/LeaderboardResponse.md)
  - [PlayerOnlineResponse](docs/Model/PlayerOnlineResponse.md)
 
 ## Documentation For Authorization

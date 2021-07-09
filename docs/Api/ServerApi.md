@@ -1,6 +1,6 @@
 # CryoFallStatisticsApiClient\ServerApi
 
-All URIs are relative to *https://virtserver.swaggerhub.com/Hanisch-IT/CryoFall_Statistics/1.0.0*
+All URIs are relative to *http://localhost:8071/CryoFallApi/Public/index.php*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,7 +8,7 @@ Method | HTTP request | Description
 [**getOnlineAction**](ServerApi.md#getonlineaction) | **GET** /server/{guid}/player_online | 
 
 # **getLeaderboardAction**
-> \CryoFallStatisticsApiClient\Model\PlayerOnlineResponse getLeaderboardAction($guid, $from, $to)
+> \CryoFallStatisticsApiClient\Model\LeaderboardResponse getLeaderboardAction($guid, $from, $to)
 
 
 
@@ -50,7 +50,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\CryoFallStatisticsApiClient\Model\PlayerOnlineResponse**](../Model/PlayerOnlineResponse.md)
+[**\CryoFallStatisticsApiClient\Model\LeaderboardResponse**](../Model/LeaderboardResponse.md)
 
 ### Authorization
 

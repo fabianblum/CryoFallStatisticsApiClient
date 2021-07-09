@@ -80,7 +80,7 @@ class Configuration
      *
      * @var string
      */
-    protected $host = 'https://virtserver.swaggerhub.com/Hanisch-IT/CryoFall_Statistics/1.0.0';
+    protected $host = 'http://localhost:8071/CryoFallApi/Public/index.php';
 
     /**
      * User agent of the HTTP request, set to "PHP-Swagger" by default

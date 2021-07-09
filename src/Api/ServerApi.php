@@ -95,7 +95,7 @@ class ServerApi
      *
      * @throws \CryoFallStatisticsApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \CryoFallStatisticsApiClient\Model\PlayerOnlineResponse
+     * @return \CryoFallStatisticsApiClient\Model\LeaderboardResponse
      */
     public function getLeaderboardAction($guid, $from = null, $to = null)
     {
@@ -112,11 +112,11 @@ class ServerApi
      *
      * @throws \CryoFallStatisticsApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \CryoFallStatisticsApiClient\Model\PlayerOnlineResponse, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \CryoFallStatisticsApiClient\Model\LeaderboardResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getLeaderboardActionWithHttpInfo($guid, $from = null, $to = null)
     {
-        $returnType = '\CryoFallStatisticsApiClient\Model\PlayerOnlineResponse';
+        $returnType = '\CryoFallStatisticsApiClient\Model\LeaderboardResponse';
         $request = $this->getLeaderboardActionRequest($guid, $from, $to);
 
         try {
@@ -168,7 +168,7 @@ class ServerApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\CryoFallStatisticsApiClient\Model\PlayerOnlineResponse',
+                        '\CryoFallStatisticsApiClient\Model\LeaderboardResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -214,7 +214,7 @@ class ServerApi
      */
     public function getLeaderboardActionAsyncWithHttpInfo($guid, $from = null, $to = null)
     {
-        $returnType = '\CryoFallStatisticsApiClient\Model\PlayerOnlineResponse';
+        $returnType = '\CryoFallStatisticsApiClient\Model\LeaderboardResponse';
         $request = $this->getLeaderboardActionRequest($guid, $from, $to);
 
         return $this->client

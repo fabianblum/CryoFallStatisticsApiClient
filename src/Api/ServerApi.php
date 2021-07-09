@@ -87,13 +87,293 @@ class ServerApi
     }
 
     /**
+     * Operation getLeaderboardAction
+     *
+     * @param  string $guid The Server GUID (required)
+     * @param  string $from Filter date from, format: 2004-02-12T15:19:21+00:00 (optional)
+     * @param  string $to Filter date to, format: 2004-02-12T15:19:21+00:00 (optional)
+     *
+     * @throws \CryoFallStatisticsApiClient\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \CryoFallStatisticsApiClient\Model\PlayerOnlineResponse
+     */
+    public function getLeaderboardAction($guid, $from = null, $to = null)
+    {
+        list($response) = $this->getLeaderboardActionWithHttpInfo($guid, $from, $to);
+        return $response;
+    }
+
+    /**
+     * Operation getLeaderboardActionWithHttpInfo
+     *
+     * @param  string $guid The Server GUID (required)
+     * @param  string $from Filter date from, format: 2004-02-12T15:19:21+00:00 (optional)
+     * @param  string $to Filter date to, format: 2004-02-12T15:19:21+00:00 (optional)
+     *
+     * @throws \CryoFallStatisticsApiClient\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \CryoFallStatisticsApiClient\Model\PlayerOnlineResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getLeaderboardActionWithHttpInfo($guid, $from = null, $to = null)
+    {
+        $returnType = '\CryoFallStatisticsApiClient\Model\PlayerOnlineResponse';
+        $request = $this->getLeaderboardActionRequest($guid, $from, $to);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if (!in_array($returnType, ['string','integer','bool'])) {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\CryoFallStatisticsApiClient\Model\PlayerOnlineResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getLeaderboardActionAsync
+     *
+     * 
+     *
+     * @param  string $guid The Server GUID (required)
+     * @param  string $from Filter date from, format: 2004-02-12T15:19:21+00:00 (optional)
+     * @param  string $to Filter date to, format: 2004-02-12T15:19:21+00:00 (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getLeaderboardActionAsync($guid, $from = null, $to = null)
+    {
+        return $this->getLeaderboardActionAsyncWithHttpInfo($guid, $from, $to)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getLeaderboardActionAsyncWithHttpInfo
+     *
+     * 
+     *
+     * @param  string $guid The Server GUID (required)
+     * @param  string $from Filter date from, format: 2004-02-12T15:19:21+00:00 (optional)
+     * @param  string $to Filter date to, format: 2004-02-12T15:19:21+00:00 (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getLeaderboardActionAsyncWithHttpInfo($guid, $from = null, $to = null)
+    {
+        $returnType = '\CryoFallStatisticsApiClient\Model\PlayerOnlineResponse';
+        $request = $this->getLeaderboardActionRequest($guid, $from, $to);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getLeaderboardAction'
+     *
+     * @param  string $guid The Server GUID (required)
+     * @param  string $from Filter date from, format: 2004-02-12T15:19:21+00:00 (optional)
+     * @param  string $to Filter date to, format: 2004-02-12T15:19:21+00:00 (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function getLeaderboardActionRequest($guid, $from = null, $to = null)
+    {
+        // verify the required parameter 'guid' is set
+        if ($guid === null || (is_array($guid) && count($guid) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $guid when calling getLeaderboardAction'
+            );
+        }
+
+        $resourcePath = '/server/{guid}/leaderboard';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($from !== null) {
+            $queryParams['from'] = ObjectSerializer::toQueryValue($from, null);
+        }
+        // query params
+        if ($to !== null) {
+            $queryParams['to'] = ObjectSerializer::toQueryValue($to, null);
+        }
+
+        // path params
+        if ($guid !== null) {
+            $resourcePath = str_replace(
+                '{' . 'guid' . '}',
+                ObjectSerializer::toPathValue($guid),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+            // // this endpoint requires Bearer token
+            if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+            }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation getOnlineAction
      *
      * @param  string $guid The Server GUID (required)
      *
      * @throws \CryoFallStatisticsApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \CryoFallStatisticsApiClient\Model\PlayerOnlineResponse[]
+     * @return \CryoFallStatisticsApiClient\Model\PlayerOnlineResponse
      */
     public function getOnlineAction($guid)
     {
@@ -108,11 +388,11 @@ class ServerApi
      *
      * @throws \CryoFallStatisticsApiClient\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \CryoFallStatisticsApiClient\Model\PlayerOnlineResponse[], HTTP status code, HTTP response headers (array of strings)
+     * @return array of \CryoFallStatisticsApiClient\Model\PlayerOnlineResponse, HTTP status code, HTTP response headers (array of strings)
      */
     public function getOnlineActionWithHttpInfo($guid)
     {
-        $returnType = '\CryoFallStatisticsApiClient\Model\PlayerOnlineResponse[]';
+        $returnType = '\CryoFallStatisticsApiClient\Model\PlayerOnlineResponse';
         $request = $this->getOnlineActionRequest($guid);
 
         try {
@@ -164,7 +444,7 @@ class ServerApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\CryoFallStatisticsApiClient\Model\PlayerOnlineResponse[]',
+                        '\CryoFallStatisticsApiClient\Model\PlayerOnlineResponse',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -206,7 +486,7 @@ class ServerApi
      */
     public function getOnlineActionAsyncWithHttpInfo($guid)
     {
-        $returnType = '\CryoFallStatisticsApiClient\Model\PlayerOnlineResponse[]';
+        $returnType = '\CryoFallStatisticsApiClient\Model\PlayerOnlineResponse';
         $request = $this->getOnlineActionRequest($guid);
 
         return $this->client

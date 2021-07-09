@@ -65,6 +65,24 @@ $apiInstance = new CryoFallStatisticsApiClient\Api\ServerApi(
     $config
 );
 $guid = "guid_example"; // string | The Server GUID
+$from = "from_example"; // string | Filter date from, format: 2004-02-12T15:19:21+00:00
+$to = "to_example"; // string | Filter date to, format: 2004-02-12T15:19:21+00:00
+
+try {
+    $result = $apiInstance->getLeaderboardAction($guid, $from, $to);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling ServerApi->getLeaderboardAction: ', $e->getMessage(), PHP_EOL;
+}
+
+
+$apiInstance = new CryoFallStatisticsApiClient\Api\ServerApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$guid = "guid_example"; // string | The Server GUID
 
 try {
     $result = $apiInstance->getOnlineAction($guid);
@@ -81,6 +99,7 @@ All URIs are relative to *https://virtserver.swaggerhub.com/Hanisch-IT/CryoFall_
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*ServerApi* | [**getLeaderboardAction**](docs/Api/ServerApi.md#getleaderboardaction) | **GET** /server/{guid}/leaderboard | 
 *ServerApi* | [**getOnlineAction**](docs/Api/ServerApi.md#getonlineaction) | **GET** /server/{guid}/player_online | 
 
 ## Documentation For Models

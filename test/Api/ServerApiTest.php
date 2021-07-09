@@ -71,6 +71,16 @@ class ServerApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test case for getLeaderboardAction
+     *
+     * .
+     *
+     */
+    public function testGetLeaderboardAction()
+    {
+    }
+
+    /**
      * Test case for getOnlineAction
      *
      * .

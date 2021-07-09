@@ -1,6 +1,6 @@
 {
     "name": "fabianblum/cryo-fall-statistics-api-client",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "",
     "keywords": [
         "swagger",
@@ -8,7 +8,7 @@
         "sdk",
         "api"
     ],
-    
+
     "license": "proprietary",
     "authors": [
         {
